@@ -4,13 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Janala</title>
+    <!-- CSS file link -->
+    <link rel="stylesheet" href="./styles/style.css">
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
     <!-- DaisyUI and tailwind cdn -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Font awesome cdn -->
     <script src="https://kit.fontawesome.com/8ae7856ac2.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    
+<body class="max-w-[1920px] mx-auto">
+    <header>
+        <nav class="flex justify-between items-center fixed top-0 z-50 bg-[#badeff42] border-b-2 border-[#c6bdbd] max-w-[1920px] w-full h-24 py-4 px-20">
+            <div class="flex items-center gap-1">
+                <h1 class="text-xl font-semibold text-[#18181b]">English</h1>
+                <img src="assets/logo.png" alt="Logo">
+                <h1 class="text-xl"><span class="tiro-bangla">জানালা</span></h1>
+            </div>
+            <ul class="flex items-center gap-4">
+                <li><button class="text-sm font-semibold text-[#422AD5] rounded-md border-2 border-[#422AD5] w-20 h-10 hover:bg-[#422AD5] hover:text-white" type="button"><i class="fa-solid fa-circle-question"></i> FAQ</button></li>
+                <li><button class="text-sm font-semibold text-[#422AD5] rounded-md border-2 border-[#422AD5] w-20 h-10 hover:bg-[#422AD5] hover:text-white" type="button"><i class="fa-solid fa-book-open"></i> Learn</button></li>
+                <li><button class="text-sm font-semibold text-[#422AD5] rounded-md border-2 border-[#422AD5] w-20 h-10 hover:bg-[#422AD5] hover:text-white" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button></li>
+            </ul>
+        </nav>
+        <section class="flex justify-between items-center mx-20 mt-24">
+            <div>
+                <h1 class="text-5xl font-bold text-[#18181B] mb-6"><span class="text-[#00BCFF]">English</span> is easy!!</h1>
+                <p class="text-2xl font-medium text-[rgba(24,24,27,0.70)] leading-10 max-w-[727px] mb-7 hind-siliguri">আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে যাবে অন্য একটি Level এ</p>
+                <form action="">
+                    <input class="rounded-md p-3 w-80 h-10 border-[#c6bdbd]" type="text" name="" id="input-name" placeholder="Enter Your Name"><br>
+                    <input class="rounded-md p-3 w-80 h-10 my-5  border-[#c6bdbd]" type="password" name="" id="input-password" placeholder="***********"><br>
+                    <button class="text-sm font-semibold rounded-md bg-[#422AD5] text-white h-10 w-32 hover:bg-white hover:text-[#422AD5] hover:border-2 hover:border-[#422AD5]">Get Started</button>
+                </form>
+            </div>
+            <img class="m-12" src="./assets/hero-student.png" alt="">
+        </section>
+    </header>
+    <main>
+        <section class="flex flex-col items-center mt-48">
+            <h1 class="text-4xl font-bold text-[#18181B] mb-9"><span class="text-[#00BCFF]">Let's</span> Learn Vocabularies</h1>
+            <div id="lesson-container" class="flex justify-center flex-wrap gap-5">
+                <button class="text-sm font-semibold text-[#422AD5] rounded-md border-2 border-[#422AD5] w-32 h-10 hover:bg-[#422AD5] hover:text-white" type="button"><i class="fa-solid fa-book-open"></i>&nbsp; &nbsp;Lesson -</button>
+            </div>
+        </section>
+    </main>
+    <script src="./script/index.js"></script>
 </body>
 </html>

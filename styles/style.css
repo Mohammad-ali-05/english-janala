@@ -1,0 +1,14 @@
+/* Poppins font */
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Hind siliguri font */
+.hind-siliguri {
+  font-family: "Hind Siliguri", sans-serif;
+}
+
+/* Tiro bangla font */
+.tiro-bangla {
+  font-family: "Tiro Bangla", serif;
+}
