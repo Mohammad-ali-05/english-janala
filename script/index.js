@@ -60,9 +60,19 @@ const displayWordsByLesson = (wordData) => {
           "beforeend",
           `<div class="rounded-xl bg-white p-3 lg:p-14">
                 <div class="flex flex-col justify-center items-center mb-14">
-                    <p class="text-3xl font-bold">${wordData.word}</p>
+                    <p class="text-3xl font-bold">${
+                      !!wordData.word ? wordData.word : "শব্দ পাওয়া যায়নি"
+                    }</p>
                     <p class="text-xl font-medium my-6">Meaning / Pronounciation</p>
-                    <p class="text-3xl font-semibold text-[#18181B]">${wordData.meaning} / ${wordData.pronunciation}</p>
+                    <p class="text-3xl font-semibold text-[#18181B]">${
+                        !!wordData.meaning
+                            ? wordData.meaning
+                            : "অর্থ পাওয়া যায়নি"
+                    } / ${
+                        !!wordData.pronunciation
+                            ? wordData.pronunciation
+                            : "উচ্চারণ পাওয়া যায়নি"
+                    }</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <button class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-circle-info"></i></button>
