@@ -28,7 +28,7 @@
                 <li><button class="text-sm font-semibold text-[#422AD5] rounded-md border-2 border-[#422AD5] w-20 h-10 hover:bg-[#422AD5] hover:text-white" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button></li>
             </ul>
         </nav>
-        <section class="flex flex-col-reverse lg:flex-row justify-between items-center px-2 lg:mx-20 lg:mt-24">
+        <section class="flex flex-col-reverse lg:flex-row justify-between items-center px-4 lg:mx-20 lg:mt-24">
             <div>
                 <h1 class="text-5xl font-bold text-[#18181B] mb-6"><span class="text-[#00BCFF]">English</span> is easy!!</h1>
                 <p class="text-2xl font-medium text-[rgba(24,24,27,0.70)] leading-10 max-w-[727px] mb-7 hind-siliguri">আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে যাবে অন্য একটি Level এ</p>
@@ -42,29 +42,44 @@
         </section>
     </header>
     <main>
-        <section class="flex flex-col items-center mx-2 my-10 lg:mt-48">
+        <section class="flex flex-col items-center mx-4 my-10 lg:mt-48">
             <h2 class="text-4xl font-bold text-[#18181B] mb-9 text-center"><span class="text-[#00BCFF]">Let's</span> Learn Vocabularies</h2>
             <div id="lesson-container" class="flex justify-center flex-wrap gap-5"></div>
         </section>
-        <section id="word-container" class="grid-cols-1 lg:grid-cols-3 gap-8 rounded-3xl bg-[#F8F8F8] p-6 lg:p-8 lg:mx-20 mx-2 my-10 lg:mb-48">
-            <div class="my-20">
-                <p class="text-sm text-[#79716b] text-center mb-4 hind-siliguri">আপনি এখনো কোন Lesson Select করেন নি</p>
-                <p class="text-4xl font-medium text-[#292524] text-center hind-siliguri">একটি Lesson Select করুন।</p>
+        <section class="flex justify-center items-center">
+            <div class="join">
+                <div>
+                  <label class="input join-item">
+                    <input id="search-value" type="text" placeholder="Search for words" required />
+                  </label>
+                </div>
+                <button onclick="loadingSearchWord()" class="btn btn-neutral join-item bg-[#422AD5]">Search</button>
             </div>
         </section>
-        <dialog id="my_modal_1" class="modal">
-            <div class="modal-box max-w-2xl w-full">
-                <div id="Word-details-container">
-                    
-                </div>
-                <div class="modal-action">
-                    <form method="dialog">
-                        <button class="btn">Close</button>
-                    </form>
+        <section>
+            <div id="loading-icon-container" class="hidden justify-center items-center h-20">
+                <span class="loading loading-spinner loading-xl"></span>
+            </div>
+            <div id="word-container" class="grid-cols-1 lg:grid-cols-3 gap-8 rounded-3xl bg-[#F8F8F8] p-6 lg:p-8 lg:mx-20 mx-4 my-10 lg:mb-48">
+                <div class="my-20">
+                    <p class="text-sm text-[#79716b] text-center mb-4 hind-siliguri">আপনি এখনো কোন Lesson Select করেন নি</p>
+                    <p class="text-4xl font-medium text-[#292524] text-center hind-siliguri">একটি Lesson Select করুন।</p>
                 </div>
             </div>
-        </dialog>
-        <section class="mx-20 my-48">
+        </section>
+        <section>
+            <dialog id="my_modal_1" class="modal">
+                <div class="modal-box max-w-2xl w-full">
+                    <div id="word-details-container"></div>
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <button class="btn">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+        </section>
+        <section class="mx-4 my-20 lg:mx-20 lg:my-48">
             <h2 class="text-4xl font-bold text-[#18181B] mb-9 text-center mb20"><span class="text-[#00BCFF]">Frequently</span> Asked Questions</h2>
             <div class="collapse collapse-plus bg-[#F8F8F8] my-5">
                 <input type="radio" name="my-accordion-3" checked="checked" />
@@ -92,7 +107,7 @@
                 <div class="collapse-content text-[#62748e]">Yes, certificates are available. After completing the course, you’ll have the option to take an exam. If you pass the exam, you’ll be awarded a certificate of completion.</div>
             </div>
         </section>
-        <section class="flex justify-between items-center bg-[#EDF6FF] border-t-2 border-[#c6bdbd] h-80 px-20">
+        <section class="flex flex-col justify-center gap-6 lg:flex-row lg:justify-between lg:items-center bg-[#EDF6FF] border-t-2 border-[#c6bdbd] h-80 px-4 lg:px-20">
             <div>
                 <h1 class="text-xl font-semibold text-[#18181b] mb-7">English<img class="inline" src="./assets/logo.png" alt=""> <span class="text-xl font-normal text-black tiro-bangla">জানালা</span></h1>
                 <p class="text-xl font-medium text-[#546A7F] mb-2">ইংরেজি শিখুন সহজে</p>

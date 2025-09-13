@@ -1,3 +1,14 @@
+// Showing and hiding loading icon
+const loadingIcon = (value) => {
+    if (value) {
+        document.getElementById("loading-icon-container").classList.remove("hidden");
+        document.getElementById("loading-icon-container").classList.add("flex");
+    } else {
+        document.getElementById("loading-icon-container").classList.remove("flex");
+        document.getElementById("loading-icon-container").classList.add("hidden");
+    }
+} 
+
 // Loading lessons from API on page load
 const loadLessons = async () => {
     fetch("https://openapi.programming-hero.com/api/levels/all")
@@ -37,8 +48,54 @@ document.getElementById("lesson-container").addEventListener("click", function (
     }
 });
 
+// loading search word from API
+const loadingSearchWord = () => {
+    fetch("https://openapi.programming-hero.com/api/words/all")
+      .then((response) => response.json())
+      .then((json) => displayingSearchWord(json.data));
+}
+
+// Displaying search word
+const displayingSearchWord = (allWords) => {
+    const searchValue = document.getElementById("search-value").value.toLowerCase().trim();
+    const filteredWords = allWords.filter((word) => word.word.toLowerCase().includes(searchValue));
+    const wordContainer = document.getElementById("word-container");
+    wordContainer.innerHTML = "";
+    filteredWords.forEach((wordData) => {
+        wordContainer.classList.add("grid");
+        wordContainer.insertAdjacentHTML(
+          "beforeend",
+          `<div class="rounded-xl bg-white p-3 lg:p-14">
+                    <div class="flex flex-col justify-center items-center mb-14">
+                        <p class="text-3xl font-bold">${
+                          !!wordData.word ? wordData.word : "শব্দ পাওয়া যায়নি"
+                        }</p>
+                        <p class="text-xl font-medium my-6">Meaning / Pronounciation</p>
+                        <p class="text-3xl font-semibold text-[#18181B]">${
+                          !!wordData.meaning
+                            ? wordData.meaning
+                            : "অর্থ পাওয়া যায়নি"
+                        } / ${
+            !!wordData.pronunciation
+              ? wordData.pronunciation
+              : "উচ্চারণ পাওয়া যায়নি"
+          }</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button onclick ="loadWordDetails(${
+                          wordData.id
+                        })" class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-circle-info"></i></button>
+                        <button onclick ="pronounceWord('${wordData.word}')" class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-volume-high"></i></button>
+                    </div>
+                </div>
+                `
+        );          
+    })
+}
+
 // Loading words by lesson from API
 const loadWordByLesson = (id) => {
+    loadingIcon(true);
     fetch(`https://openapi.programming-hero.com/api/level/${id}`)
         .then((response) => response.json())
         .then((json) => displayWordsByLesson(json.data))
@@ -60,23 +117,26 @@ const displayWordsByLesson = (wordData) => {
                         }</p>
                         <p class="text-xl font-medium my-6">Meaning / Pronounciation</p>
                         <p class="text-3xl font-semibold text-[#18181B]">${
-                            !!wordData.meaning
-                                ? wordData.meaning
-                                : "অর্থ পাওয়া যায়নি"
+                          !!wordData.meaning
+                            ? wordData.meaning
+                            : "অর্থ পাওয়া যায়নি"
                         } / ${
-                            !!wordData.pronunciation
-                                ? wordData.pronunciation
-                                : "উচ্চারণ পাওয়া যায়নি"
-                        }</p>
+                !!wordData.pronunciation
+                  ? wordData.pronunciation
+                  : "উচ্চারণ পাওয়া যায়নি"
+              }</p>
                     </div>
                     <div class="flex justify-between items-center">
-                        <button onclick ="loadWordDetails(${wordData.id})" class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-circle-info"></i></button>
-                        <button class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-volume-high"></i></button>
+                        <button onclick ="loadWordDetails(${
+                          wordData.id
+                        })" class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-circle-info"></i></button>
+                        <button onclick ="pronounceWord('${wordData.word}')" class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-volume-high"></i></button>
                     </div>
                 </div>
                 `
-        );
-    })
+            );
+        })
+        loadingIcon(false);
     } else {
         wordContainer.classList.remove("grid");
         wordContainer.insertAdjacentHTML(
@@ -88,7 +148,14 @@ const displayWordsByLesson = (wordData) => {
             </div>
             `
         );
+        loadingIcon(false);
     }
+}
+// Word pronunciation by clicking button
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
 }
 
 // load word details by clocking on button
@@ -100,7 +167,7 @@ const loadWordDetails = (id) => {
 
 // Display word details by clocking on button
 const displayWordDetails = (wordDetails) => {
-    const wordDetailsContainer = document.getElementById('Word-details-container')
+    const wordDetailsContainer = document.getElementById('word-details-container')
     wordDetailsContainer.innerHTML = ""
     wordDetailsContainer.insertAdjacentHTML(
       "beforeend",
