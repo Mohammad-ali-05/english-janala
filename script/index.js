@@ -22,12 +22,7 @@ loadLessons();
 document.getElementById("lesson-container").addEventListener("click", function (e) {
     const allLessonButton = document.getElementsByClassName("lesson-buttons");
     const allLessonButtonArray = Array.from(allLessonButton)
-    const selectWordContainer = document.getElementById(
-      "select-word-container"
-    );
     if (e.target.tagName === "BUTTON" || e.target.tagName === "I") {
-        selectWordContainer.classList.remove("flex");
-        selectWordContainer.classList.add("hidden");
         allLessonButtonArray.forEach((button) => {
             button.classList.add("bg-white", "text-[#422AD5]");
             button.classList.remove("bg-[#422AD5]", "text-white");
@@ -52,34 +47,102 @@ const loadWordByLesson = (id) => {
 // Displaying words by lesson
 const displayWordsByLesson = (wordData) => {
     const wordContainer = document.getElementById("word-container");
-    wordContainer.classList.remove("hidden")
-    wordContainer.classList.add("grid")
     wordContainer.innerHTML = ""
-    wordData.forEach((wordData) => {
+    if (wordData.length) {
+        wordContainer.classList.add("grid")
+        wordData.forEach((wordData) => {
+            wordContainer.insertAdjacentHTML(
+              "beforeend",
+              `<div class="rounded-xl bg-white p-3 lg:p-14">
+                    <div class="flex flex-col justify-center items-center mb-14">
+                        <p class="text-3xl font-bold">${
+                          !!wordData.word ? wordData.word : "শব্দ পাওয়া যায়নি"
+                        }</p>
+                        <p class="text-xl font-medium my-6">Meaning / Pronounciation</p>
+                        <p class="text-3xl font-semibold text-[#18181B]">${
+                            !!wordData.meaning
+                                ? wordData.meaning
+                                : "অর্থ পাওয়া যায়নি"
+                        } / ${
+                            !!wordData.pronunciation
+                                ? wordData.pronunciation
+                                : "উচ্চারণ পাওয়া যায়নি"
+                        }</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button onclick ="loadWordDetails(${wordData.id})" class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-circle-info"></i></button>
+                        <button class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-volume-high"></i></button>
+                    </div>
+                </div>
+                `
+        );
+    })
+    } else {
+        wordContainer.classList.remove("grid");
         wordContainer.insertAdjacentHTML(
           "beforeend",
-          `<div class="rounded-xl bg-white p-3 lg:p-14">
-                <div class="flex flex-col justify-center items-center mb-14">
-                    <p class="text-3xl font-bold">${
-                      !!wordData.word ? wordData.word : "শব্দ পাওয়া যায়নি"
-                    }</p>
-                    <p class="text-xl font-medium my-6">Meaning / Pronounciation</p>
-                    <p class="text-3xl font-semibold text-[#18181B]">${
-                        !!wordData.meaning
-                            ? wordData.meaning
-                            : "অর্থ পাওয়া যায়নি"
-                    } / ${
-                        !!wordData.pronunciation
-                            ? wordData.pronunciation
-                            : "উচ্চারণ পাওয়া যায়নি"
-                    }</p>
-                </div>
-                <div class="flex justify-between items-center">
-                    <button class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-circle-info"></i></button>
-                    <button class="text-[#374957] bg-[#1a91ff1a] rounded-lg w-14 h-14"><i class="fa-solid fa-volume-high"></i></button>
-                </div>
+          `<div class="my-20">
+                <img class="w-24 mx-auto" src="./assets/alert-error.png" alt="">
+                <p class="text-sm text-[#79716b] text-center mb-4 hind-siliguri">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।</p>
+                <p class="text-4xl font-medium text-[#292524] text-center hind-siliguri">নেক্সট Lesson এ যান</p>
             </div>
             `
         );
+    }
+}
+
+// load word details by clocking on button
+const loadWordDetails = (id) => {
+    fetch(`https://openapi.programming-hero.com/api/word/${id}`)
+        .then((response) => response.json())
+        .then((json) => displayWordDetails(json.data))
+}
+
+// Display word details by clocking on button
+const displayWordDetails = (wordDetails) => {
+    const wordDetailsContainer = document.getElementById('Word-details-container')
+    wordDetailsContainer.innerHTML = ""
+    wordDetailsContainer.insertAdjacentHTML(
+      "beforeend",
+      `<h3 class="text-4xl font-semibold  mb-8">${
+        !!wordDetails.word ? wordDetails.word : "শব্দ পাওয়া যায়নি"
+      } (<i class="fa-solid fa-microphone-lines"></i>:${
+        !!wordDetails.pronunciation
+          ? wordDetails.pronunciation
+          : "উচ্চারণ পাওয়া যায়নি"
+      })</h3>
+        <div class="mb-8">
+            <h4 class="text-2xl font-semibold py-1 mb-2">Meaning</h4>
+            <p class="text-2xl font-medium py-1 hind-siliguri">${
+              !!wordDetails.meaning ? wordDetails.meaning : "অর্থ পাওয়া যায়নি"
+            }</p>
+        </div>
+        <div class="mb-8">
+            <h4 class="text-2xl font-semibold py-1 mb-2">Example</h4>
+            <p class="text-2xl text-opacity-80 py-1">${
+              !!wordDetails.sentence
+                ? wordDetails.sentence
+                : "বাক্য পাওয়া যায়নি"
+            }</p>
+        </div>
+        <div>
+            <h4 class="text-2xl font-semibold mb-2 py-1 hind-siliguri">সমার্থক শব্দ গুলো</h4>
+            <div id="synonyms-container" class="flex flex-wrap gap-5 text-xl text-opacity-80 py-1">${
+              wordDetails.synonyms.length
+                ? synonymsInsertedElementsArray(wordDetails.synonyms)
+                : "সমার্থক শব্দ পাওয়া যায়নি"
+            }</div>
+        </div>
+        `
+    );
+    document.getElementById("my_modal_1").showModal();
+} 
+
+// Function for inserting synonyms into modal
+function synonymsInsertedElementsArray(synonymsArray) {
+    const synonymsHtmlArray = synonymsArray.map((synonym) => {
+        return `<p class="text-xl text-opacity-80 flex justify-center items-center bg-[#EDF7FF] border-2 border-[#D7E4EF] rounded-md w-40 h-14">${synonym}</p>
+        `;
     })
+    return synonymsHtmlArray.join(" ")
 }
